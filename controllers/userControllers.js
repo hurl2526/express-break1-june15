@@ -1,8 +1,10 @@
-const bcrypt = require('bcrypjs');
+const bcrypt = require('bcryptjs');
+const User = require('../models/User')
+const express = require('express')
 
 module.exports = {
   getAllUsers: (req, res) => {
-    User.find
+    User.find()
       .then((users) => {
         return res.status(200).json(users);
       })
@@ -28,7 +30,7 @@ module.exports = {
   register: (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
-      return res.json({ message: 'Fields must be completed' });
+      return res.status(504).json({ confirmation: 'fail', message: 'Fields must be completed' });
     }
 
     User.findOne({ email: req.body.email })
@@ -37,7 +39,7 @@ module.exports = {
           return res.status(400).json({ message: 'User Exists' });
         }
 
-        const salt = bcrypt.genSaltSync(0);
+        const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
 
         let newUser = new User();
@@ -45,10 +47,8 @@ module.exports = {
         newUser.email = req.body.email;
         newUser.password = hash;
 
-        newUser
-          .save()
-          .then((user) => {
-            return res.status(201).json(user);
+        newUser.save().then((user) => {
+            return res.status(201).json({confirmation:'success', user});
           })
           .catch((err) =>
             res.json({
@@ -81,7 +81,7 @@ module.exports = {
   },
   updateUser: (req, res) => {
     const id = req.params.id;
-    User.findById()
+    User.findById(id)
       .then((user) => {
         if (!user) {
           return res

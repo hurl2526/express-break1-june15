@@ -1,7 +1,6 @@
 {
   "name": "express-nodb",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -13,9 +12,19 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.9.19"
   },
   "devDependencies": {
     "morgan": "^1.10.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hurl2526/express-break1-june15.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hurl2526/express-break1-june15/issues"
+  },
+  "homepage": "https://github.com/hurl2526/express-break1-june15#readme",
+  "description": ""
 }
